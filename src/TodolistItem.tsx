@@ -1,9 +1,9 @@
-import {FilterValues, TaskType} from "./App.tsx";
+import {FilterValues, Task} from "./types/types";
 import {Button} from "./button/Button.tsx";
 
 type Props = {
     title: string
-    tasks?: TaskType[]
+    tasks: Task[]
     deleteTask: (taskId: number) => void
     changeTasksFilter: (value: FilterValues) => void
 }
@@ -20,20 +20,23 @@ export const TodolistItem = (props: Props) => {
                 <Button title={'+'} onClick={() => alert('add todo')}/>
             </div>
             {
-                tasks ?
-                    <ul style={{listStyle: 'none', paddingLeft: 0}}>
-                        {
-                            tasks.map(task => {
-                                return (
-                                    <li key={task.id}>
-                                        <input type="checkbox" checked={task.isDone}/> <span>{task.title}</span>
-                                        <Button title={'x'} onClick={() => deleteTask(task.id)}/>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
-                    : <span>Tasks is empty</span>
+                !tasks.length
+                && <span>Tasks is empty</span>
+            }
+            {
+                tasks &&
+                <ul style={{listStyle: 'none', paddingLeft: 0}}>
+                    {
+                        tasks.map(task => {
+                            return (
+                                <li key={task.id}>
+                                    <input type="checkbox" checked={task.isDone}/> <span>{task.title}</span>
+                                    <Button title={'x'} onClick={() => deleteTask(task.id)}/>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
             }
             <div>
                 <Button title={'All'} onClick={() => changeTasksFilter('all')}/>

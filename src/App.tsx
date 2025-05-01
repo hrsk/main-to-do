@@ -1,13 +1,7 @@
 import './App.css'
 import {TodolistItem} from "./TodolistItem.tsx";
 import {useState} from "react";
-
-export type TaskType = {
-    id: number
-    title: string
-    isDone: boolean
-}
-export type FilterValues = 'all' | 'active' | 'completed'
+import {FilterValues} from "./types/types.ts";
 
 export const App = () => {
 
@@ -42,5 +36,3 @@ export const App = () => {
         </div>
     )
 }
-
-export default App
