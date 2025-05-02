@@ -4,3 +4,10 @@ export type Task = {
     isDone: boolean
 }
 export type FilterValues = 'all' | 'active' | 'completed'
+export type Todolist = {
+    id: string
+    title: string
+    filter: FilterValues
+}
+
+export type TasksState = Record<string, Task[]>
