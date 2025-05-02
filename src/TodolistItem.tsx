@@ -1,23 +1,51 @@
 import {FilterValues, Task} from "./types/types";
 import {Button} from "./button/Button.tsx";
+import {useState, KeyboardEvent, ChangeEvent} from "react";
 
 type Props = {
     title: string
     tasks: Task[]
-    deleteTask: (taskId: number) => void
+    deleteTask: (taskId: string) => void
     changeTasksFilter: (value: FilterValues) => void
+    createTask: (value: string) => void
 }
 
 export const TodolistItem = (props: Props) => {
 
-    const {title, tasks, deleteTask, changeTasksFilter} = props;
+    const {title, tasks, deleteTask, changeTasksFilter, createTask} = props;
+
+    const [value, setValue] = useState('');
+
+    // const refValue = useRef<HTMLInputElement>(null)
+
+    const addTask = () => {
+        // if (refValue.current) {
+        //     createTask(refValue.current.value)
+        //     refValue.current.value = ''
+        // }
+
+        createTask(value)
+        setValue('')
+    }
+
+    const keyPressHandler = (e: KeyboardEvent) => {
+        const key = e.key;
+        if (e.metaKey && key === 'Enter') {
+            addTask()
+        }
+    }
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+    }
 
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <Button title={'+'} onClick={() => alert('add todo')}/>
+                <input placeholder={'Write . . .'} value={value} onChange={onChangeHandler}
+                       onKeyDown={keyPressHandler}/>
+                <Button title={'+'} onClick={addTask}/>
             </div>
             {
                 !tasks.length
