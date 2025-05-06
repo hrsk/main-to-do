@@ -1,5 +1,9 @@
 import {ChangeEvent, KeyboardEvent, useRef, useState} from "react"
-import {Button} from "./button/Button.tsx";
+import Box from "@mui/material/Box"
+import TextField from "@mui/material/TextField"
+import IconButton from "@mui/material/IconButton"
+import AddBoxIcon from "@mui/icons-material/AddBox"
+
 
 type Props = {
     onCreateItem: (value: string) => void
@@ -53,22 +57,22 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
     }
 
     return (
-        <div style={{display: 'flex', alignItems: 'baseline'}}>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-                <input
-                    className={error ? 'error' : undefined}
-                    placeholder={"Enter a title"}
-                    ref={inputRef}
-                    value={value}
-                    onBlur={onBlurHandler}
-                    onChange={onChangeHandler}
-                    onKeyDown={onKeyPressHandler}
-                />
-                {
-                    error && <span className={error ? 'error-message' : undefined}>{error}</span>
-                }
-            </div>
-            <Button title={'+'} onClick={callbackHandler}/>
-        </div>
+        <Box>
+            <TextField
+                label={"Enter a title"}
+                variant={"outlined"}
+                inputRef={inputRef}
+                value={value}
+                size={"small"}
+                error={!!error}
+                helperText={error}
+                onBlur={onBlurHandler}
+                onChange={onChangeHandler}
+                onKeyDown={onKeyPressHandler}
+            />
+            <IconButton onClick={callbackHandler} color={"primary"}>
+                <AddBoxIcon />
+            </IconButton>
+        </Box>
     )
 }

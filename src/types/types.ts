@@ -11,3 +11,5 @@ export type Todolist = {
 }
 
 export type TasksState = Record<string, Task[]>
+
+export type ThemeMode = 'light' | 'dark'

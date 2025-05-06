@@ -1,4 +1,6 @@
 import {ChangeEvent, Fragment, JSX, KeyboardEvent, ReactNode, useState} from "react"
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 type Props = {
     initialValue: string
@@ -47,12 +49,15 @@ export const EditableSpan = ({initialValue, callback, render}: Props) => {
     }
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             {editMode ? (
-                <input
-                    placeholder={"Enter a title"}
-                    className={error ? "error" : undefined}
+                <TextField
+                    label={error ? error : "Enter a title"}
+                    variant={"outlined"}
+                    className={error ? "error" : ""}
                     value={value}
+                    error={!!error}
+                    size={"small"}
                     autoFocus={true}
                     onChange={onChangeHandler}
                     onBlur={deactivateEditMode}
@@ -61,10 +66,7 @@ export const EditableSpan = ({initialValue, callback, render}: Props) => {
             ) : (
                 <Children>{render(value, () => activateEditMode())}</Children>
             )}
-            {
-                error && <span className={error ? 'error-message' : undefined}>{error}</span>
-            }
-        </div>
+        </Box>
     )
 }
 
