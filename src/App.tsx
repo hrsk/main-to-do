@@ -17,7 +17,12 @@ import {ThemeProvider} from '@mui/material/styles';
 import {createTheme} from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import CssBaseline from "@mui/material/CssBaseline";
-import {createTodolistAC, removeTodolistAC, todolistsReducer} from "./model/todolists-reducer.ts";
+import {
+    changeTodolistFilterAC, changeTodolistTitleAC,
+    createTodolistAC,
+    removeTodolistAC,
+    todolistsReducer
+} from "./model/todolists-reducer.ts";
 
 export const App = () => {
 
@@ -60,6 +65,7 @@ export const App = () => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId)})
     }
     const changeTasksFilter = (todolistId: string, value: FilterValues) => {
+        dispatch(changeTodolistFilterAC({todolistId, filter: value}))
         // setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter: value} : todolist))
     }
     const createTask = (todolistId: string, value: string) => {
@@ -87,12 +93,15 @@ export const App = () => {
         setTasks({...tasks})
     }
     const changeTodolistTitle = (todolistId: string, value: string) => {
+        dispatch(changeTodolistTitleAC({todolistId, title: value}))
         // setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, title: value} : todolist))
     }
     const createTodolist = (value: string) => {
-        const todolistId = v1();
+        // const todolistId = v1();
+        const action = createTodolistAC(value)
+        dispatch(action)
         // setTodolists([...todolists, {id: todolistId, title: value, filter: 'all'}])
-        setTasks({...tasks, [todolistId]: []})
+        setTasks({...tasks, [action.payload.todolistId]: []})
     }
 
     const changeThemeMode = () => {
@@ -124,7 +133,7 @@ export const App = () => {
                     </Grid>
                     <Grid container spacing={4}>
                         {
-                            todolists.map(todolist => {
+                            todolists?.map(todolist => {
                                 let filteredTasks = tasks[todolist.id]
 
                                 if (todolist.filter === 'active') {
