@@ -1,7 +1,7 @@
 import './App.css'
 import {TodolistItem} from "../TodolistItem.tsx";
 import {useState} from "react";
-import {FilterValues, TasksState, ThemeMode, Todolist} from "../types/types.ts";
+import {FilterValues, ThemeMode} from "../types/types.ts";
 import {CreateItemForm} from "../CreateItemForm.tsx";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
@@ -27,8 +27,10 @@ import {
     createTaskActionCreator,
     removeTaskActionCreator
 } from "../model/tasks-reducer.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./store.ts";
+import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
+import {useAppSelector} from "../common/hooks/useAppSelector.ts";
+import {selectTodolists} from "../model/todolists-selectors.ts";
+import {selectTasks} from "../model/tasks-selectors.ts";
 
 export const App = () => {
 
@@ -46,9 +48,9 @@ export const App = () => {
     });
 
 
-    const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
-    const tasks = useSelector<RootState, TasksState>(state => state.tasks)
-    const dispatch = useDispatch()
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
+    const dispatch = useAppDispatch()
 
     const deleteTask = (todolistId: string, taskId: string) => {
         dispatch(removeTaskActionCreator({todolistId, taskId}))
