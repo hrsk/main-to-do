@@ -70,10 +70,10 @@ export const App = () => {
     }
 
     const deleteTodolist = (todolistId: string) => {
-        dispatch(removeTodolistAC(todolistId))
+        dispatch(removeTodolistAC({todolistId}))
     }
     const changeTodolistTitle = (todolistId: string, value: string) => {
-        dispatch(changeTodolistTitleAC({todolistId, title: value}))
+        dispatch(changeTodolistTitleAC({todolistId, value}))
     }
     const createTodolist = (value: string) => {
         dispatch(createTodolistAC(value))
