@@ -1,7 +1,6 @@
 import Checkbox from "@mui/material/Checkbox"
 import ListItem from "@mui/material/ListItem"
 import {getListItemSx} from "./TodolistItem.styles"
-import {EditableSpan} from "./EditableSpan"
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -11,6 +10,7 @@ import {
 } from "@/model/tasks-reducer.ts";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch.ts";
 import {Task} from "./types/types";
+import {EditableComponent} from "@/components";
 
 type PropsType = {
     task: Task
@@ -36,13 +36,14 @@ export const TaskItem = ({task, todolistId}: PropsType) => {
                 onChange={(event) => changeTasksStatusHandler(task.id, event.currentTarget.checked)}
                 checked={task.isDone}
             />
-            <EditableSpan
-                render={(text, onDoubleClick) => (
-                    <span onDoubleClick={onDoubleClick}>{text}</span>
-                )}
-                initialValue={task.title}
-                callback={() => changeTaskTitleHandler(task.id, task.title)}
-            />
+            <EditableComponent as={'span'} initialValue={task.title} callback={() => changeTaskTitleHandler(task.id, task.title)}/>
+            {/*<EditableSpan*/}
+            {/*    render={(text, onDoubleClick) => (*/}
+            {/*        <span onDoubleClick={onDoubleClick}>{text}</span>*/}
+            {/*    )}*/}
+            {/*    initialValue={task.title}*/}
+            {/*    callback={() => changeTaskTitleHandler(task.id, task.title)}*/}
+            {/*/>*/}
             <IconButton onClick={() => deleteTaskHandler(task.id)}>
                 <DeleteIcon/>
             </IconButton>

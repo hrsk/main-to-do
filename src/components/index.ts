@@ -1,0 +1,1 @@
+export {EditableComponent} from './EditableComponent/EditableComponent';
