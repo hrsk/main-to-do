@@ -36,14 +36,9 @@ export const TaskItem = ({task, todolistId}: PropsType) => {
                 onChange={(event) => changeTasksStatusHandler(task.id, event.currentTarget.checked)}
                 checked={task.isDone}
             />
-            <EditableComponent as={'span'} initialValue={task.title} callback={() => changeTaskTitleHandler(task.id, task.title)}/>
-            {/*<EditableSpan*/}
-            {/*    render={(text, onDoubleClick) => (*/}
-            {/*        <span onDoubleClick={onDoubleClick}>{text}</span>*/}
-            {/*    )}*/}
-            {/*    initialValue={task.title}*/}
-            {/*    callback={() => changeTaskTitleHandler(task.id, task.title)}*/}
-            {/*/>*/}
+            <EditableComponent initialValue={task.title}
+                               callback={() => changeTaskTitleHandler(task.id, task.title)}>{task.title}</EditableComponent>
+
             <IconButton onClick={() => deleteTaskHandler(task.id)}>
                 <DeleteIcon/>
             </IconButton>

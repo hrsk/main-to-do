@@ -1,10 +1,10 @@
-import {ChangeEvent, ComponentProps, ElementType, KeyboardEvent, useState} from "react";
+import {ChangeEvent, ComponentProps, ElementType, KeyboardEvent, ReactNode, useState} from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 
 type EditableComponentOwnProps<E extends ElementType = ElementType> = {
-    children?: string
+    children: ReactNode
     as?: E
     initialValue: string
     callback: (value: string) => void
@@ -13,22 +13,15 @@ type EditableComponentOwnProps<E extends ElementType = ElementType> = {
 type EditableComponentProps<E extends ElementType> = EditableComponentOwnProps<E> &
     Omit<ComponentProps<E>, keyof EditableComponentOwnProps>
 
-// type EditableComponentProps<T extends ElementType> = {
-//     initialValue: string;
-//     callback: (value: string) => void;
-//     as?: T;
-//     children?: ReactNode;
-// } & Omit<ComponentProps<T>, "children" | "onDoubleClick">;
+const __DEFAULT_ELEMENT__ = 'span' as const;
 
-const __DEFAULT_ELEMENT__ = 'h3' as const;
-
-export const EditableComponent = <E extends ElementType = "span">({
-                                                                      initialValue,
-                                                                      callback,
-                                                                      as,
-                                                                      children,
-                                                                      ...rest
-                                                                  }: EditableComponentProps<E>) => {
+export const EditableComponent = <E extends ElementType = typeof __DEFAULT_ELEMENT__>({
+                                                                                          initialValue,
+                                                                                          callback,
+                                                                                          as,
+                                                                                          children,
+                                                                                          ...rest
+                                                                                      }: EditableComponentProps<E>) => {
     const [editMode, setEditMode] = useState(false);
     const [value, setValue] = useState<string>(initialValue);
     const [error, setError] = useState<string | null>(null);
@@ -72,7 +65,7 @@ export const EditableComponent = <E extends ElementType = "span">({
                 />
             ) : (
                 <Component onDoubleClick={() => setEditMode(true)} {...rest}>
-                    {value}
+                    {children}
                 </Component>
             )}
         </Box>

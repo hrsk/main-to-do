@@ -23,10 +23,8 @@ export const TodolistTitle = (props: PropsType) => {
     }
     return (
         <div style={{display: 'flex', alignItems: 'baseline'}}>
-            <EditableComponent as={'h3'} callback={changeTodolistTitleHandler} initialValue={title}/>
-            {/*<EditableSpan render={(text, onDoubleClick) => <h3*/}
-            {/*    onDoubleClick={onDoubleClick}>{text}</h3>}*/}
-            {/*              initialValue={title} callback={changeTodolistTitleHandler}/>*/}
+            <EditableComponent as={'h3'} callback={changeTodolistTitleHandler}
+                               initialValue={title}>{title}</EditableComponent>
             <IconButton onClick={deleteTodolistHandler}>
                 <DeleteIcon/>
             </IconButton>
