@@ -37,7 +37,7 @@ export const TaskItem = ({task, todolistId}: PropsType) => {
                 checked={task.isDone}
             />
             <EditableComponent initialValue={task.title}
-                               callback={() => changeTaskTitleHandler(task.id, task.title)}>{task.title}</EditableComponent>
+                               callback={(value) => changeTaskTitleHandler(task.id, value)}>{task.title}</EditableComponent>
 
             <IconButton onClick={() => deleteTaskHandler(task.id)}>
                 <DeleteIcon/>
