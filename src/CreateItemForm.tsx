@@ -15,6 +15,7 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
     const inputRef = useRef<HTMLInputElement>(null)
 
     const removeInputFocus = () => inputRef.current?.blur()
+    const errorInputFocus = () => inputRef.current?.focus()
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.currentTarget.value)
@@ -24,15 +25,12 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
         const trimmedValue = value.trim()
         if (trimmedValue !== "") {
             onCreateItem(trimmedValue)
+            removeInputFocus()
+            setValue("")
         } else {
-            setError("Title is required!")
-            removeInputFocus()
+            setError('Title is required!')
+            errorInputFocus()
         }
-
-        if (value === "" && error === null) {
-            removeInputFocus()
-        }
-        setValue("")
     }
 
     const onKeyPressHandler = (e: KeyboardEvent) => {
@@ -42,17 +40,6 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
         }
         if (error !== null) {
             setError(null)
-        }
-    }
-
-    const onBlurHandler = () => {
-        if (value === "" && error === null) {
-            removeInputFocus()
-        }
-        const trimmedValue = value.trim()
-        if (trimmedValue !== "") {
-            onCreateItem(trimmedValue)
-            setValue("")
         }
     }
 
@@ -66,12 +53,11 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
                 size={"small"}
                 error={!!error}
                 helperText={error}
-                onBlur={onBlurHandler}
                 onChange={onChangeHandler}
                 onKeyDown={onKeyPressHandler}
             />
             <IconButton onClick={callbackHandler} color={"primary"}>
-                <AddBoxIcon />
+                <AddBoxIcon/>
             </IconButton>
         </Box>
     )
